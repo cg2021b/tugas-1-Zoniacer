@@ -1,7 +1,7 @@
 # Tugas 1
-Nama : Satrio Hanif Wicaksono
-NRP  : 05111940000103
-Kelas: Grafkom B
+Nama : Satrio Hanif Wicaksono<br>
+NRP  : 05111940000103<br>
+Kelas: Grafkom B<br>
 
 ## Botol
 ### Bagian Belakang Atas
