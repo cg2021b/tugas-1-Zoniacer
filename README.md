@@ -3,6 +3,8 @@ Nama : Satrio Hanif Wicaksono<br>
 NRP  : 05111940000103<br>
 Kelas: Grafkom B<br>
 
+Hasil tugas dapat dilihat di [Link Tugas](https://cg2021b.github.io/tugas-1-Zoniacer/)
+
 ## Botol
 ### Bagian Belakang Atas
 ![alt text](https://github.com/cg2021b/tugas-1-Zoniacer/blob/master/Belakang%20Atas.jpg)
