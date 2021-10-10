@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mencoba three js</title>
+    <script src="js/three.min.js"></script>
+    <style>
+        *{
+            font-family: "Times New Roman", Times, serif;
+            background-color: rgba(88, 238, 193, 0.993);
+        }
+
+        h1{
+            text-align: center;
+            color: white;
+        }
+
+        canvas {
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            text-align: center;
+            border-radius: 1rem;
+            border: 5px solid rgb(36, 40, 248);
+            width: 800px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="name">Satrio Hanif Wicaksono &emsp;||&emsp; 05111940000103</h1>
+        <select id="light">
+                <option value="0">Directional Light</option>
+                <option value="1">Ambient Light</option>
+                <option value="2">Point Light</option>
+                <option value="3">Hemisphere Light</option>
+                <option value="4">Spotlight</option>
+        </select>
+</body>
+</html>
+
+
+<script>    
+        let scene, camera, renderer;
+
+        let sphere;
+        let createSphere = function(){
+                let geometry = new THREE.SphereGeometry(0.5, 12, 30);
+                let material = new THREE.MeshBasicMaterial({
+                        color: 0x0095DD,
+                        wireframe: true,
+                        wireframeLinewidth: 2
+                        });
+                sphere = new THREE.Mesh(geometry, material);
+                scene.add(sphere);
+        }
+
+        let box;
+        let createBox = function(){
+                let geometry = new THREE.BoxGeometry(1, 1, 1);
+                let material = new THREE.MeshPhongMaterial({
+                        color: 0x0095DD
+                        });
+                box = new THREE.Mesh(geometry, material);
+                scene.add(box);
+        }
+
+        let cylinder;
+        let createCylinder = function(){
+                let geometry = new THREE.CylinderGeometry(0.5, 0.5, 1, 20);
+                let material = new THREE.MeshLambertMaterial({color: 0x0095DD});
+                cylinder = new THREE.Mesh(geometry, material);
+                scene.add(cylinder);
+        }
+
+        let octahedron;
+        let createOctahedron = function(){
+                let geometry = new THREE.OctahedronGeometry(1, 1);
+                let material = new THREE.MeshLambertMaterial({color: 0x0095DD});
+                octahedron = new THREE.Mesh(geometry, material);
+                scene.add(octahedron);
+        }
+
+        let torus;
+        let createTorus = function(){
+                let geometry = new THREE.TorusGeometry(0.5, 0.3,5, 10);
+                let material = new THREE.MeshPhysicalMaterial({ color: 0x0095DD});
+                torus = new THREE.Mesh(geometry, material);
+                scene.add(torus);
+        }
+
+        let plane;
+        let createPlane = function(){
+                let geometry = new THREE.PlaneGeometry(1, 1);
+                let material = new THREE.MeshLambertMaterial({color: 0x0095DD});
+                plane = new THREE.Mesh(geometry, material);
+                scene.add(plane);
+        }
+
+        let circle;
+        let createCircle = function(){
+                let geometry = new THREE.CircleGeometry(1, 40);
+                let material = new THREE.MeshLambertMaterial({color: 0x0095DD});
+                circle = new THREE.Mesh(geometry, material);
+                scene.add(circle);
+        }
+
+        let cone;
+        let createCone = function(){
+                let geometry = new THREE.ConeGeometry(0.5, 1, 40);
+                let material = new THREE.MeshLambertMaterial({color: 0x0095DD});
+                cone = new THREE.Mesh(geometry, material);
+                scene.add(cone);
+        }
+
+        let lightsChange = function() {
+            const dLight = new THREE.DirectionalLight(0xffffff, 1);
+            dLight.position.set(-10, 15, 50).normalize();
+            const aLight = new THREE.AmbientLight(0xffffff, 1);
+            aLight.position.set(-10, 15, 50);
+            const pLight = new THREE.PointLight(0xffffff, 1, 100);
+            pLight.position.set(-10, 15, 50);
+            const hLight = new THREE.HemisphereLight(0xffffff, 0x0095DD, 1);
+            hLight.position.set(-10, 10, 15);
+            const sLight = new THREE.SpotLight(0xffffff, 1, 75);
+            sLight.position.set(-10, 15, 50);
+
+            const lights = [dLight, aLight, pLight, hLight, sLight];
+
+            lights.forEach((obj) => scene.add(obj));
+
+            lights.forEach((light) => {
+                light.visible = false;
+            });
+            lights[0].visible = true;
+
+            const selectedLight = document.getElementById('light');
+            selectedLight.addEventListener('change', (e) => {
+                const selected = e.target.value;
+                lights.forEach((light) => {
+                        light.visible = false;
+                });
+                lights[selected].visible = true;
+           });
+        };
+        
+        // set up the environment - 
+        // initiallize scene, camera, objects and renderer
+        
+        let init = function() {
+            // 1. create the scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x000000);
+           
+            // 2. create an locate the camera       
+            camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 
+                        1, 1000);
+            camera.position.z = 14;
+            lightsChange();
+            
+            // 3. create an locate the object on the scene           
+            createSphere();
+            sphere.position.x = -2;
+            sphere.position.y = 2;
+
+            
+            createBox();
+            box.position.x = 2;
+            box.position.y = 2;
+
+            createCylinder();
+ 
+            createOctahedron();
+            octahedron.position.x = -2;
+
+            createTorus();
+            torus.position.x = 2;
+
+            createPlane();
+            plane.position.x = 1.5;
+            plane.position.y = -2;
+
+            createCircle();
+            circle.position.x = -1.5;
+            circle.position.y = -2;
+
+
+            createCone();
+            cone.position.y = 2;
+            
+            // 4. create the renderer     
+            renderer = new THREE.WebGLRenderer();   
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            
+            document.body.appendChild(renderer.domElement);
+          
+        };
+      
+        
+        // main animation loop - calls 50-60 in a second.
+        let mainLoop = function() {
+        //     console.log("Hello");
+            sphere.rotation.x += 0.01;
+            sphere.rotation.y += 0.01;
+        
+            box.rotation.x += 0.01;
+
+            cylinder.rotation.x += 0.01;
+
+            octahedron.rotation.x += 0.01;
+            octahedron.rotation.y += 0.01;
+
+            torus.rotation.x += 0.01;
+            torus.rotation.y += 0.01;
+
+            plane.rotation.x += 0.01;
+            plane.rotation.y += 0.01;
+
+            circle.rotation.x += 0.01;
+            circle.rotation.y += 0.01;
+
+            cone.rotation.x -= 0.01;
+            cone.rotation.y += 0.01;
+
+            renderer.render(scene, camera);
+            requestAnimationFrame(mainLoop);
+        };
+        
+        ///////////////////////////////////////////////
+        init();
+        mainLoop();
+    </script>
